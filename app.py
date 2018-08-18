@@ -1,0 +1,56 @@
+from flask import Flask, render_template
+from flask import jsonify
+from config import config
+import tweepy
+
+app = Flask(__name__)
+extracted_information = ["created_at", "description", "followers_count", "id", "screen_name", "name",
+                         "profile_image_url", "statuses_count", "id_str"]
+
+
+# todo: implement default page
+@app.route('/')
+@app.route('/index')
+def show_index():
+    return render_template("index.html")
+
+
+@app.route('/screen_name/<string:screen_name>')
+def twitter_screen_name(screen_name):
+    global twitter_api
+    user = twitter_api.get_user(screen_name=screen_name)
+    custom_member = {}
+    for information in extracted_information:
+        custom_member[information] = user._json[information]
+    return jsonify(custom_member)
+
+
+@app.route('/user_id/<string:user_id>')
+def twitter_user_id(user_id):
+    global twitter_api
+    user = twitter_api.get_user(user_id=user_id)
+    custom_member = {}
+    for information in extracted_information:
+        custom_member[information] = user._json[information]
+    return jsonify(custom_member)
+
+
+@app.route('/twitter_list/<string:twitter_name>/<string:list_name>')
+def twitter_list_url(twitter_name, list_name):
+    global twitter_api
+    result = []
+    for member in tweepy.Cursor(twitter_api.list_members, twitter_name, list_name).items():
+        custom_member = {}
+        for information in extracted_information:
+            custom_member[information] = member._json[information]
+        result.append(custom_member)
+    return jsonify(result)
+
+
+
+if __name__ == '__main__':
+    auth = tweepy.OAuthHandler(config["consumer_key"], config["consumer_secret"])
+    auth.set_access_token(config["access_token"], config["access_token_secret"])
+
+    twitter_api = tweepy.API(auth)
+    app.run()

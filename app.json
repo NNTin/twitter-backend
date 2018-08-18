@@ -1,0 +1,28 @@
+{
+  "name": "Twitter Backend",
+  "description": "Custom Backend used to retrieve Twitter data",
+  "keywords": [
+    "discord",
+    "bot",
+    "twitter",
+    "tweets",
+    "backend"
+  ],
+  "website": "https://nntin.github.io/discord-logo/",
+  "repository": "https://github.com/NNTin/twitter-backend",
+  "logo": "https://i.imgur.com/FveO8jf.png",
+  "env": {
+    "CONSUMER_KEY": {
+      "description": "Twitter consumer key https://apps.twitter.com/"
+    },
+    "CONSUMER_SECRET": {
+      "description": "Twitter consumer secret"
+    },
+    "ACCESS_TOKEN": {
+      "description": "Twitter access token"
+    },
+    "ACCESS_TOKEN_SECRET": {
+      "description": "Twitter access token secret"
+    }
+  }
+}

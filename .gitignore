@@ -1,0 +1,5 @@
+*.pyc
+/.idea/
+config.json
+test2.py
+test.py
