@@ -50,7 +50,7 @@ def get_twitter_users_by_twitter_list(twitter_name, list_name):
 
 @app.route('/status/<int:status_id>')
 def get_status(status_id):
-    status = twitter_api.get_status(id=status_id)
+    status = twitter_api.get_status(id=status_id, tweet_mode='extended')
     print(status)
     print(dir(status))
     return jsonify(status._json)
